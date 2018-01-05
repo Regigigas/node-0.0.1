@@ -14,6 +14,7 @@ PositionList.Temp = `
 				<th>职位</th>
 				<th>薪资</th>
 				<th>地址</th>
+				<th>logo</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -91,13 +92,15 @@ $.extend(PositionList.prototype, {
     var itemContainer = this.element.find(".js-tbody"),
       str = "";
     for (var i = 0; i < list.length; i++) {
-      var item = list[i];
+      var item = list[i],
+        file = item.filename ? item.filename : '1515140104330-58bcc26ebc33dbb6b7c905862a4a7875.jpg';
       str += `<tr>
 						<td>${i + 1}</td>
 						<td>${item.company}</td>
 						<td>${item.position}</td>
 						<td>${item.salary}</td>
 						<td>${item.address}</td>
+						<td><img style='width:30px;height:30px' src='/uploads/${file}'/></td>
 						<td>
 							<span class="js-update" data-id="${item._id}">修改</span>
 							<span class="js-delete" data-id="${item._id}">删除</span>

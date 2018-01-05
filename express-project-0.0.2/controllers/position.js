@@ -58,13 +58,19 @@ module.exports = {
 
   updatePosition(req, res) {
     const { company, position, salary, address, id } = req.body;
-
-    positionModel.updatePositionById(id, {
+   
+    const params = {
       company,
       position,
       salary,
-      address
-    }, (result) => {
+      address,
+    }
+
+    if (req.file && req.file.filename) {
+        params.filename = req.file.filename
+    }
+
+    positionModel.updatePositionById(id, params, (result) => {
       res.json({
         ret: true,
         data: {

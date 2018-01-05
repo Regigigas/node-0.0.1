@@ -34,7 +34,11 @@ UpdatePosition.ModelTemp = `
 			<div class="form-group">
 			  <label for="addpos-address">办公地点</label>
 			  <input type="text" class="form-control js-address" id="updatepos-address" placeholder="请输入办公地点">
-			</div>
+      </div>
+      <div class="form-group">
+        <label for="addpos-logo"></label>
+        <input type="file" class="form-control js-logo" id="updatepos-logo">
+      </div>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-primary js-submit">提交</button>
@@ -58,6 +62,7 @@ $.extend(UpdatePosition.prototype, {
     this.positionElem = this.element.find(".js-position");
     this.salaryElem = this.element.find(".js-salary");
     this.addressElem = this.element.find(".js-address");
+    this.logoElem = this.element.find(".js-logo");
     this.succNoticeElem = this.element.find(".js-succ-notice");
     this.container.append(this.element);
   },
@@ -94,20 +99,27 @@ $.extend(UpdatePosition.prototype, {
       position = this.positionElem.val(),
       salary = this.salaryElem.val(),
       address = this.addressElem.val();
-    
-    
+    logo = this.logoElem[0].files[0];
+
+    //创建一个表单数据的对象
+    var formData = new FormData();
+    formData.append('company', company);
+    formData.append('position', position);
+    formData.append('salary', salary);
+    formData.append('address', address);
+    formData.append('id', this.id);
+    formData.append('logo', logo);
+
     $.ajax({
+      cache: false,
       type: "POST",
       url: "/api/updatePosition",
-      data: {
-        company: company,
-        position: position,
-        salary: salary,
-        address: address,
-        id: this.id
-      },
+      processData: false,
+      contentType: false,
+      data: formData,
       success: $.proxy(this.handleUpdatePositionSucc, this)
     })
+    
   },
   handleUpdatePositionSucc: function (res) {
     console.log(res);

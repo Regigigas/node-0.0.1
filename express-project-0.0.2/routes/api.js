@@ -13,7 +13,7 @@ router.post('/addPosition', upload.single('logo'), positionController.addPositio
 router.get('/removePosition', positionController.removePosition)
 router.get('/getPositionList', positionController.getPositionList)
 router.get('/getPosition', positionController.getPosition)
-router.post('/updatePosition', positionController.updatePosition)
+router.post('/updatePosition', upload.single('logo'), positionController.updatePosition)
 
 
 module.exports = router;
